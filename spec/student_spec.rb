@@ -1,5 +1,6 @@
 require 'rspec'
 require './lib/student'
+require 'pry'
 
 RSpec.describe Student do
   it "exists" do
