@@ -61,7 +61,54 @@ RSpec.describe Gradebook do
       @calculus.enroll(@student2)
       @student1.log_score(30)
       @student2.log_score(60)
-      expect(@gradebook.students_below(50)).to be_a(Array)
+      expect(@gradebook.students_below(50)).to eq([@student1])
+    end
+  end
+
+  describe '#all_grades' do
+    it 'shows all grades' do
+      @gradebook.add_course(@calculus)
+      @calculus.enroll(@student1)
+      @calculus.enroll(@student2)
+      @student1.log_score(30)
+      @student1.log_score(50)
+      @student2.log_score(30)
+      @student2.log_score(60)
+      @gradebook.add_course(@science)
+      @science.enroll(@student3)
+      @science.enroll(@student4)
+      @science.enroll(@student5)
+      @student3.log_score(60)
+      @student3.log_score(70)
+      @student4.log_score(90)
+      @student4.log_score(100)
+      @student5.log_score(90)
+      @student5.log_score(70)
+
+      expect(@gradebook.all_grades).to eq({@calculus => [@student1.grade, @student2.grade], @science => [@student3.grade, @student4.grade, @student5.grade]})
+    end
+  end
+
+  describe '#students_in_range' do
+    it 'gives students in range' do
+      @gradebook.add_course(@calculus)
+      @calculus.enroll(@student1)
+      @calculus.enroll(@student2)
+      @student1.log_score(30)
+      @student1.log_score(50)
+      @student2.log_score(30)
+      @student2.log_score(60)
+      @gradebook.add_course(@science)
+      @science.enroll(@student3)
+      @science.enroll(@student4)
+      @science.enroll(@student5)
+      @student3.log_score(60)
+      @student3.log_score(70)
+      @student4.log_score(90)
+      @student4.log_score(100)
+      @student5.log_score(90)
+      @student5.log_score(70)
+      expect(@gradebook.students_in_range(30, 70)).to eq([@student1, @student2, @student3])
     end
   end
 end
