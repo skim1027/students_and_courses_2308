@@ -49,8 +49,7 @@ RSpec.describe Gradebook do
       @science.enroll(@student4)
       @science.enroll(@student5)
 
-      expect(@gradebook.list_all_students).to be_a(Hash)
-      expect(@gradebook.list_all_students.values).to be_a(Array)
+      expect(@gradebook.list_all_students).to eq({@calculus => [@student1, @student2], @science => [@student3, @student4, @student5]})
     end
   end
 
